@@ -1,0 +1,1101 @@
+{
+  "categories": [
+    {
+      "id": "C1",
+      "name": "Organic Grains",
+      "description": "Premium quality naturally grown grains including rice, wheat, and millets.",
+      "created_at": "2023-01-15T08:30:00Z",
+      "meta_info": {
+        "product_count": 45,
+        "is_featured": true
+      }
+    },
+    {
+      "id": "C2",
+      "name": "Cold-Pressed Oils",
+      "description": "Oils extracted using traditional wood-pressing methods to retain nutrients.",
+      "created_at": "2023-02-10T11:20:00Z",
+      "meta_info": {
+        "product_count": 12,
+        "is_featured": false
+      }
+    },
+    {
+      "id": "C3",
+      "name": "Farm Fresh Spices",
+      "description": "Pure, unadulterated ground and whole spices sourced directly from local farmers.",
+      "created_at": "2023-03-05T09:45:00Z",
+      "meta_info": {
+        "product_count": 89,
+        "is_featured": true
+      }
+    },
+    {
+      "id": "C4",
+      "name": "Natural Sweeteners",
+      "description": "Healthy alternatives to sugar including raw honey, jaggery, and stevia.",
+      "created_at": "2023-04-12T14:10:00Z",
+      "meta_info": {
+        "product_count": 22,
+        "is_featured": false
+      }
+    },
+    {
+      "id": "C5",
+      "name": "Dry Fruits & Nuts",
+      "description": "High-quality energy-boosting snacks including almonds, walnuts, and raisins.",
+      "created_at": "2023-05-20T10:00:00Z",
+      "meta_info": {
+        "product_count": 34,
+        "is_featured": true
+      }
+    }
+  ],
+  "products": [
+    {
+      "name": "Premium Basmati Rice",
+      "description": "Long-grain aged aromatic basmati rice, perfect for biryani and pulao.",
+      "stock_quantity": 1000,
+      "stock_unit": "Kg",
+      "is_active": true,
+      "category_id": "C1",
+      "product_variants": [
+        {
+          "id": "PV1",
+          "variant_name": "5 Kg Bag",
+          "variant_price": 12.5,
+          "variant_quantity": 5,
+          "quantity_unit": "Kg"
+        },
+        {
+          "id": "PV1",
+          "variant_name": "2 Kg Bag",
+          "variant_price": 2.5,
+          "variant_quantity": 2,
+          "quantity_unit": "Kg"
+        }
+      ],
+      "product_images": [
+        {
+          "id": "PIM1",
+          "image_path": "/images/products/rice-front.jpg",
+          "alt_text": "Basmati Rice Front View",
+          "is_primary": true
+        }
+      ],
+      "categorie_details": {
+        "id": "C1",
+        "name": "Organic Grains",
+        "description": "Premium quality naturally grown grains including rice, wheat, and millets."
+      },
+      "id": "P001"
+    },
+    {
+      "id": "P002",
+      "name": "Cold Pressed Sunflower Oil",
+      "description": "100% pure sunflower oil extracted using traditional cold press methods.",
+      "stock_quantity": 300,
+      "stock_unit": "lt",
+      "created_at": "2023-12-01T12:00:00Z",
+      "updated_at": "2023-12-01T12:00:00Z",
+      "is_active": true,
+      "category_id": "C3",
+      "product_variants": [
+        {
+          "id": "PV3",
+          "variant_name": "1 Litre Bottle",
+          "variant_price": 4.5,
+          "variant_quantity": 1,
+          "quantity_unit": "L"
+        },
+        {
+          "id": "PV4",
+          "variant_name": "5 Litre Can",
+          "variant_price": 21,
+          "variant_quantity": 5,
+          "quantity_unit": "L"
+        },
+        {
+          "id": "PV2",
+          "variant_name": "2 Litre Can",
+          "variant_price": 13.5,
+          "variant_quantity": 2,
+          "quantity_unit": "L"
+        }
+      ],
+      "product_images": [
+        {
+          "id": "PIM3",
+          "image_path": "/images/products/oil-1l.jpg",
+          "alt_text": "Sunflower Oil 1L Bottle",
+          "is_primary": true
+        },
+        {
+          "id": "PIM1",
+          "image_path": "blob:http://localhost:5173/3826f348-6a57-4999-81ef-94ec85831da8",
+          "alt_text": "",
+          "is_primary": false
+        }
+      ],
+      "categorie_details": {
+        "id": "C3",
+        "name": "Farm Fresh Spices",
+        "description": "Pure, unadulterated ground and whole spices sourced directly from local farmers."
+      }
+    },
+    {
+      "name": "Organic Turmeric Powder",
+      "description": "High-curcumin turmeric sourced directly from organic farms.",
+      "stock_quantity": 2000,
+      "stock_unit": "gm",
+      "is_active": true,
+      "category_id": "C2",
+      "created_at": "2023-12-01T12:00:00Z",
+      "updated_at": "2023-12-01T12:00:00Z",
+      "product_variants": [
+        {
+          "id": "PV5",
+          "variant_name": "250g Pouch",
+          "variant_price": 2.99,
+          "variant_quantity": 250,
+          "quantity_unit": "gm"
+        }
+      ],
+      "product_images": [
+        {
+          "id": "PIM4",
+          "image_path": "/images/products/turmeric-pack.jpg",
+          "alt_text": "Organic Turmeric Powder",
+          "is_primary": true
+        }
+      ],
+      "categorie_details": {
+        "id": "C2",
+        "name": "Cold-Pressed Oils",
+        "description": "Oils extracted using traditional wood-pressing methods to retain nutrients."
+      },
+      "id": "P003"
+    },
+    {
+      "name": "Whole Wheat Flour (Atta)",
+      "description": "Stone-ground whole wheat flour with high fiber content.",
+      "stock_quantity": 800,
+      "stock_unit": "gm",
+      "is_active": true,
+      "category_id": "C1",
+      "created_at": "2023-12-01T12:00:00Z",
+      "updated_at": "2023-12-01T12:00:00Z",
+      "product_variants": [
+        {
+          "id": "PV7",
+          "variant_name": "10 Kg Bag",
+          "variant_price": 150,
+          "variant_quantity": 10,
+          "quantity_unit": "mg"
+        },
+        {
+          "id": "PV1",
+          "variant_name": "1",
+          "variant_price": 20,
+          "variant_quantity": 1,
+          "quantity_unit": "gm"
+        }
+      ],
+      "product_images": [
+        {
+          "id": "PIM5",
+          "image_path": "/images/products/atta-bag.jpg",
+          "alt_text": "10kg Atta Bag",
+          "is_primary": true
+        },
+        {
+          "id": "PIM1",
+          "image_path": "blob:http://localhost:5173/6e5aef70-cd77-4b60-a7b0-12fecc46c5ed",
+          "alt_text": "",
+          "is_primary": false
+        },
+        {
+          "id": "PIM2",
+          "image_path": "blob:http://localhost:5173/9083eb1a-b485-4a75-8bdc-e66c01da2504",
+          "alt_text": "",
+          "is_primary": false
+        }
+      ],
+      "categorie_details": {
+        "id": "C1",
+        "name": "Organic Grains",
+        "description": "Premium quality naturally grown grains including rice, wheat, and millets."
+      },
+      "id": "P004"
+    },
+    {
+      "id": "P005",
+      "name": "Raw Wildflower Honey",
+      "description": "Unprocessed, farm-fresh honey collected from wildflowers.",
+      "category_id": "C4",
+      "is_active": true,
+      "created_at": "2023-12-01T12:00:00Z",
+      "updated_at": "2023-12-01T12:00:00Z",
+      "stock_quantity": 40,
+      "stock_unit": "other",
+      "product_variants": [
+        {
+          "id": "PV8",
+          "variant_name": "500ml Jar",
+          "variant_price": 9.99,
+          "variant_quantity": 500,
+          "quantity_unit": "ml"
+        }
+      ],
+      "product_images": [
+        {
+          "id": "PIM6",
+          "image_path": "/images/products/honey-jar.jpg",
+          "alt_text": "Wildflower Honey Glass Jar",
+          "is_primary": true
+        }
+      ],
+      "categorie_details": {
+        "id": "C4",
+        "name": "Breakfast & Spreads",
+        "description": "Healthy spreads, jams, and honey."
+      }
+    }
+  ],
+  "users": [
+    {
+      "id": "USR1",
+      "first_name": "Jagadessh",
+      "last_name": "Gandi",
+      "password_hash": "9djioncjbuiasj",
+      "email": "abcd@gmail.com",
+      "phone": "7387498352",
+      "role": "customer",
+      "created_at": "12-12-2025",
+      "addresses": [
+        {
+          "id": "AD1",
+          "full_name": "Jagadessh Gandi",
+          "phone": "7387498352",
+          "email": "abcd@gmail.com",
+          "address_line1": "Flat 201, Sunshine Apartments",
+          "address_line2": "Main Road",
+          "city": "Kadapa",
+          "pincode": "516001",
+          "is_default": true
+        }
+      ],
+      "password": "12345678"
+    },
+    {
+      "id": "USR2",
+      "first_name": "Ananya",
+      "last_name": "Sharma",
+      "password_hash": "k8s2n9xmz0p1",
+      "email": "ananya.s@outlook.com",
+      "phone": "9844012345",
+      "role": "admin",
+      "created_at": "15-12-2025",
+      "addresses": [
+        {
+          "id": "AD2",
+          "full_name": "Ananya Sharma",
+          "phone": "9844012345",
+          "email": "ananya.s@outlook.com",
+          "address_line1": "H-54, Sector 15",
+          "address_line2": "Near Metro Station",
+          "city": "Noida",
+          "pincode": "201301",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR3",
+      "first_name": "Rahul",
+      "last_name": "Verma",
+      "password_hash": "v3rm4_secure_pass",
+      "email": "rahul.v@gmail.com",
+      "phone": "8877665544",
+      "role": "customer",
+      "created_at": "18-12-2025",
+      "addresses": [
+        {
+          "id": "AD3",
+          "full_name": "Rahul Verma (Office)",
+          "phone": "8877665544",
+          "email": "rahul.v@gmail.com",
+          "address_line1": "Tech Park North",
+          "address_line2": "Whitefield",
+          "city": "Bangalore",
+          "pincode": "560066",
+          "is_default": false
+        },
+        {
+          "id": "AD4",
+          "full_name": "Rahul Verma (Home)",
+          "phone": "8877665533",
+          "email": "rahul.v@gmail.com",
+          "address_line1": "Gokul Residency",
+          "address_line2": "Indiranagar",
+          "city": "Bangalore",
+          "pincode": "560038",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR4",
+      "first_name": "Priya",
+      "last_name": "Nair",
+      "password_hash": "priy4_n4ir_2025",
+      "email": "priya.n@yahoo.com",
+      "phone": "9900112233",
+      "role": "customer",
+      "created_at": "20-12-2025",
+      "addresses": [
+        {
+          "id": "AD5",
+          "full_name": "Priya Nair",
+          "phone": "9900112233",
+          "email": "priya.n@yahoo.com",
+          "address_line1": "34/A Malabar Hill",
+          "address_line2": "Near Coast Guard",
+          "city": "Mumbai",
+          "pincode": "400006",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR5",
+      "first_name": "Suresh",
+      "last_name": "Reddy",
+      "password_hash": "sr3ddy_hash_77",
+      "email": "suresh.reddy@protonmail.com",
+      "phone": "7011223344",
+      "role": "customer",
+      "created_at": "22-12-2025",
+      "addresses": [
+        {
+          "id": "AD6",
+          "full_name": "Suresh Reddy",
+          "phone": "7011223344",
+          "email": "suresh.reddy@protonmail.com",
+          "address_line1": "Phase 2, Jubilee Hills",
+          "address_line2": "Road No 45",
+          "city": "Hyderabad",
+          "pincode": "500033",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR1766926198849",
+      "first_name": "Venkat",
+      "last_name": "Testing",
+      "email": "testing@gmail.com",
+      "phone": "9440653107",
+      "role": "customer",
+      "password": "Testing@123",
+      "addresses": [
+        {
+          "id": "AD1766926198849",
+          "full_name": "Venkat Testing",
+          "phone": "9440653107",
+          "email": "testing@gmail.com",
+          "address_line1": "101-2",
+          "address_line2": "",
+          "city": "Kadapa",
+          "pincode": "500215",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR1767284731621",
+      "first_name": "Naruto",
+      "last_name": "Uzumaki",
+      "email": "naruto@gmail.com",
+      "phone": "7416558015",
+      "role": "customer",
+      "password": "123456",
+      "created_at": "2026-01-01",
+      "addresses": [
+        {
+          "id": "AD1767284731621",
+          "full_name": "Naruto Uzumaki",
+          "phone": "7416558015",
+          "email": "naruto@gmail.com",
+          "address_line1": "kohona (hidden leaf village)",
+          "address_line2": "",
+          "city": "Japan",
+          "pincode": "524300",
+          "is_default": true
+        }
+      ]
+    },
+    {
+      "id": "USR1767436597511",
+      "first_name": "JAGADISH",
+      "last_name": "G",
+      "email": "jagadish@gmail.com",
+      "phone": "7416558015",
+      "role": "customer",
+      "password": "12345678",
+      "created_at": "2026-01-03",
+      "addresses": [
+        {
+          "id": "AD1767436597511",
+          "full_name": "JAGADISH G",
+          "phone": "7416558015",
+          "email": "jagadish@gmail.com",
+          "address_line1": "India",
+          "address_line2": "",
+          "city": "Nellore",
+          "pincode": "524305",
+          "is_default": true
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": "ORD-1001",
+      "created_at": "2025-03-15T10:30:00Z",
+      "actual_amount": 1599,
+      "sub_total": 1800,
+      "discount_amount": 201,
+      "discount_source": "COUPON_CODE",
+      "order_status": "delivered",
+      "payment_status": "paid",
+      "stripe_payment_id": "ch_3MvL2X2eZv",
+      "customer": {
+        "id": "CUS001",
+        "first_name": "Jagadessh",
+        "last_name": "Gandi",
+        "email": "abcd@gmail.com",
+        "phone": "7387498352"
+      },
+      "shipping_address": {
+        "full_name": "Jagadessh Gandi",
+        "address_line1": "Flat 201, Sunshine Apartments",
+        "address_line2": "Main Road",
+        "city": "Kadapa",
+        "pincode": "516001",
+        "phone": "7387498352",
+        "email": "abcd@gmail.com"
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-55",
+          "product_id": "PROD-99",
+          "product_name": "Premium Basmati Rice",
+          "variant_id": "VAR-202",
+          "variant_name": "5kg Pack",
+          "stock_quantity": 5,
+          "quantity_unit": "kg",
+          "quantity": 2,
+          "price_per_unit": 700,
+          "total_price": 1400
+        }
+      ]
+    },
+    {
+      "id": "ORD-1002",
+      "created_at": "2025-03-20T14:15:00Z",
+      "actual_amount": 850,
+      "sub_total": 850,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": "ch_4NnM3Y3fAw",
+      "customer": {
+        "id": "CUS042",
+        "first_name": "Ananya",
+        "last_name": "Sharma",
+        "email": "ananya.s@example.com",
+        "phone": "9845012345"
+      },
+      "shipping_address": {
+        "full_name": "Ananya Sharma",
+        "address_line1": "12/A, HSR Layout",
+        "address_line2": "Sector 4",
+        "city": "Bengaluru",
+        "pincode": "560102",
+        "phone": "9845012345",
+        "email": "ananya.s@example.com"
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-88",
+          "product_id": "PROD-12",
+          "product_name": "Organic Cold Pressed Coconut Oil",
+          "variant_id": "VAR-105",
+          "variant_name": "1L Bottle",
+          "stock_quantity": 15,
+          "quantity_unit": "L",
+          "quantity": 1,
+          "price_per_unit": 850,
+          "total_price": 850
+        }
+      ]
+    },
+    {
+      "id": "ORD-1003",
+      "created_at": "2025-03-22T09:45:00Z",
+      "actual_amount": 2450,
+      "sub_total": 2800,
+      "discount_amount": 350,
+      "discount_source": "PROMOTION",
+      "order_status": "confirmed",
+      "payment_status": "paid",
+      "stripe_payment_id": "ch_5PoP4Z4gBx",
+      "customer": {
+        "id": "CUS089",
+        "first_name": "Rahul",
+        "last_name": "Verma",
+        "email": "rahul.v@testmail.com",
+        "phone": "8877665544"
+      },
+      "shipping_address": {
+        "full_name": "Rahul Verma",
+        "address_line1": "House No 55, Civil Lines",
+        "address_line2": "Near Clock Tower",
+        "city": "Lucknow",
+        "pincode": "226001",
+        "phone": "8877665544",
+        "email": "rahul.v@testmail.com"
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-102",
+          "product_id": "PROD-44",
+          "product_name": "A2 Desi Cow Ghee",
+          "variant_id": "VAR-303",
+          "variant_name": "500ml Jar",
+          "stock_quantity": 25,
+          "quantity_unit": "ml",
+          "quantity": 2,
+          "price_per_unit": 1400,
+          "total_price": 2800
+        }
+      ]
+    },
+    {
+      "id": "ORD-1004",
+      "created_at": "2025-03-24T18:20:00Z",
+      "actual_amount": 450,
+      "sub_total": 500,
+      "discount_amount": 50,
+      "discount_source": "COUPON_CODE",
+      "order_status": "cancelled",
+      "payment_status": "failed",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "CUS112",
+        "first_name": "Sneha",
+        "last_name": "Reddy",
+        "email": "sneha.reddy@provider.com",
+        "phone": "9900112233"
+      },
+      "shipping_address": {
+        "full_name": "Sneha Reddy",
+        "address_line1": "Apartment 4B, Jubilee Hills",
+        "address_line2": "Road No. 36",
+        "city": "Hyderabad",
+        "pincode": "500033",
+        "phone": "9900112233",
+        "email": "sneha.reddy@provider.com"
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-150",
+          "product_id": "PROD-22",
+          "product_name": "Organic Turmeric Powder",
+          "variant_id": "VAR-099",
+          "variant_name": "250gm Pouch",
+          "stock_quantity": 50,
+          "quantity_unit": "gm",
+          "quantity": 2,
+          "price_per_unit": 250,
+          "total_price": 500
+        }
+      ]
+    }
+  ],
+  "coupons": [
+    {
+      "id": "CPN-7788",
+      "code": "SUMMER50",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "50.00",
+      "min_order_value": 1000,
+      "usage_stats": {
+        "limit": 100,
+        "used": 45,
+        "remaining": 55
+      },
+      "validity": {
+        "start_date": "2025-06-01T00:00:00Z",
+        "end_date": "2025-08-31T23:59:59Z",
+        "is_active": true
+      }
+    },
+    {
+      "id": "CPN-1022",
+      "code": "WELCOME100",
+      "discount_type": "FLAT",
+      "discount_value": "100.00",
+      "min_order_value": 500,
+      "usage_stats": {
+        "limit": 500,
+        "used": 498,
+        "remaining": 2
+      },
+      "validity": {
+        "start_date": "2025-01-01T00:00:00Z",
+        "end_date": "2025-12-31T23:59:59Z",
+        "is_active": true
+      }
+    },
+    {
+      "id": "CPN-9912",
+      "code": "EARLYBIRD",
+      "discount_type": "FLAT",
+      "discount_value": "250.00",
+      "min_order_value": 1500,
+      "usage_stats": {
+        "limit": 200,
+        "used": 0,
+        "remaining": 200
+      },
+      "validity": {
+        "start_date": "2025-12-01T00:00:00Z",
+        "end_date": "2025-12-15T23:59:59Z",
+        "is_active": false
+      }
+    },
+    {
+      "id": "CPN-4456",
+      "code": "FLASH10",
+      "discount_type": "PERCENTAGE",
+      "discount_value": "10.00",
+      "min_order_value": 100,
+      "usage_stats": {
+        "limit": 1000,
+        "used": 850,
+        "remaining": 150
+      },
+      "validity": {
+        "start_date": "2024-11-01T00:00:00Z",
+        "end_date": "2024-11-02T23:59:59Z",
+        "is_active": true
+      }
+    }
+  ],
+  "promotions": [
+    {
+      "id": "PROM-1001",
+      "title": "Monsoon Greens Sale",
+      "description": "Get flat discounts on all leafy vegetables to stay healthy this rainy season.",
+      "promotion_type": "SEASONAL",
+      "discount_type": "FLAT",
+      "discount_value": 40,
+      "min_order_value": 200,
+      "config": {
+        "start_date": "2025-07-01T00:00:00Z",
+        "end_date": "2025-08-15T23:59:59Z",
+        "is_active": true
+      },
+      "targets": {
+        "type": "CATEGORY",
+        "data": [
+          "CAT-VEG-01",
+          "CAT-ORG-05"
+        ]
+      },
+      "created_at": "2025-06-25T10:30:00Z"
+    },
+    {
+      "id": "PROM-1002",
+      "title": "Dairy Essentials Deal",
+      "description": "20% off on specific high-demand milk and cheese variants.",
+      "promotion_type": "FIXED",
+      "discount_type": "PERCENTAGE",
+      "discount_value": 20,
+      "min_order_value": 150,
+      "config": {
+        "start_date": "2025-12-01T00:00:00Z",
+        "end_date": "2025-12-31T23:59:59Z",
+        "is_active": true
+      },
+      "targets": {
+        "type": "PRODUCT",
+        "data": [
+          "PROD-MILK-02",
+          "PROD-CHZ-09",
+          "PROD-BUT-04"
+        ]
+      },
+      "created_at": "2025-11-20T09:15:00Z"
+    },
+    {
+      "id": "PROM-1003",
+      "title": "New User Harvest",
+      "description": "Welcome gift: Flat ₹100 off on your first order of fresh fruits.",
+      "promotion_type": "FIRST_ORDER",
+      "discount_type": "FLAT",
+      "discount_value": 100,
+      "min_order_value": 500,
+      "config": {
+        "start_date": "2025-01-01T00:00:00Z",
+        "end_date": "2025-12-31T23:59:59Z",
+        "is_active": true
+      },
+      "targets": {
+        "type": "CATEGORY",
+        "data": [
+          "CAT-FRT-12"
+        ]
+      },
+      "created_at": "2025-01-01T00:00:01Z"
+    },
+    {
+      "id": "PROM-1004",
+      "title": "Weekend Bakery Blast",
+      "description": "30% off on premium sourdough and muffins this weekend only.",
+      "promotion_type": "FLASH_SALE",
+      "discount_type": "PERCENTAGE",
+      "discount_value": 30,
+      "min_order_value": 250,
+      "config": {
+        "start_date": "2025-12-27T06:00:00Z",
+        "end_date": "2025-12-28T22:00:00Z",
+        "is_active": false
+      },
+      "targets": {
+        "type": "PRODUCT",
+        "data": [
+          "PROD-BRD-88",
+          "PROD-MUF-21"
+        ]
+      },
+      "created_at": "2025-12-20T14:00:00Z"
+    },
+    {
+      "id": "PROM-1005",
+      "title": "Staples Stock-up",
+      "description": "Bulk discount on rice and pulses categories.",
+      "promotion_type": "BULK",
+      "discount_type": "PERCENTAGE",
+      "discount_value": 15,
+      "min_order_value": 1500,
+      "config": {
+        "start_date": "2025-09-10T00:00:00Z",
+        "end_date": "2025-09-30T23:59:59Z",
+        "is_active": true
+      },
+      "targets": {
+        "type": "CATEGORY",
+        "data": [
+          "CAT-RICE-02",
+          "CAT-PULSE-05",
+          "CAT-GRN-09"
+        ]
+      },
+      "created_at": "2025-09-01T11:45:00Z"
+    }
+  ],
+  "carts": [
+    {
+      "id": "101",
+      "user_id": "USR1",
+      "coupon_active": true,
+      "coupon_id": 7,
+      "coupon_code": "NEWUSER10",
+      "coupon_discount": 150,
+      "dicounted_total_price": 1350,
+      "actual_amount": 1500,
+      "updated_at": "2025-12-30T18:45:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 501,
+          "cart_id": 101,
+          "product_variant_id": 3001,
+          "quantity": 2,
+          "product_actual_price": 500,
+          "applicable_promotion_id": 12,
+          "promotion_discount": 50,
+          "After_discounted_total": 900,
+          "updated_at": "2025-12-30T18:40:00",
+          "product_variant": {
+            "id": 3001,
+            "variant_name": "1 Litre Bottle",
+            "variant_price": 500,
+            "product": {
+              "id": 200,
+              "name": "Cold Pressed Groundnut Oil",
+              "description": "Traditional wood-pressed oil rich in nutrients",
+              "primary_image": {
+                "id": 9001,
+                "url": "https://cdn.example.com/products/groundnut-oil-1l.jpg",
+                "alt_text": "Cold Pressed Groundnut Oil 1 Litre",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 25,
+        "First_name": "Sreenadh",
+        "Last_name": "Bathalakuri",
+        "email": "sreenadh@example.com"
+      }
+    },
+    {
+      "id": "102",
+      "user_id": "USR2",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "dicounted_total_price": 1200,
+      "actual_amount": 1200,
+      "updated_at": "2025-12-29T16:30:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 503,
+          "cart_id": 102,
+          "product_variant_id": 3002,
+          "quantity": 2,
+          "product_actual_price": 600,
+          "applicable_promotion_id": null,
+          "promotion_discount": 0,
+          "After_discounted_total": 1200,
+          "updated_at": "2025-12-29T16:28:00",
+          "product_variant": {
+            "id": 3002,
+            "variant_name": "2 Litre Can",
+            "variant_price": 600,
+            "product": {
+              "id": 201,
+              "name": "Cold Pressed Coconut Oil",
+              "description": "Pure coconut oil extracted traditionally",
+              "primary_image": {
+                "id": 9002,
+                "url": "https://cdn.example.com/products/coconut-oil-2l.jpg",
+                "alt_text": "Cold Pressed Coconut Oil 2 Litre",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 26,
+        "First_name": "Arun",
+        "Last_name": "Kumar",
+        "email": "arun@example.com"
+      }
+    },
+    {
+      "id": "103",
+      "user_id": "USR3",
+      "coupon_active": true,
+      "coupon_id": 9,
+      "coupon_code": "FESTIVE20",
+      "coupon_discount": 300,
+      "dicounted_total_price": 1700,
+      "actual_amount": 2000,
+      "updated_at": "2025-12-28T12:10:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 504,
+          "cart_id": 103,
+          "product_variant_id": 3003,
+          "quantity": 4,
+          "product_actual_price": 500,
+          "applicable_promotion_id": 15,
+          "promotion_discount": 100,
+          "After_discounted_total": 1700,
+          "updated_at": "2025-12-28T12:05:00",
+          "product_variant": {
+            "id": 3003,
+            "variant_name": "500 ml Bottle",
+            "variant_price": 500,
+            "product": {
+              "id": 202,
+              "name": "Cold Pressed Sesame Oil",
+              "description": "Healthy sesame oil for daily cooking",
+              "primary_image": {
+                "id": 9003,
+                "url": "https://cdn.example.com/products/sesame-oil-500ml.jpg",
+                "alt_text": "Cold Pressed Sesame Oil 500ml",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 27,
+        "First_name": "Meena",
+        "Last_name": "Ravi",
+        "email": "meena@example.com"
+      }
+    },
+    {
+      "id": "104",
+      "user_id": "USR4",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "dicounted_total_price": 850,
+      "actual_amount": 850,
+      "updated_at": "2025-12-27T20:00:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 505,
+          "cart_id": 104,
+          "product_variant_id": 3004,
+          "quantity": 1,
+          "product_actual_price": 850,
+          "applicable_promotion_id": null,
+          "promotion_discount": 0,
+          "After_discounted_total": 850,
+          "updated_at": "2025-12-27T19:55:00",
+          "product_variant": {
+            "id": 3004,
+            "variant_name": "5 Litre Can",
+            "variant_price": 850,
+            "product": {
+              "id": 203,
+              "name": "Cold Pressed Sunflower Oil",
+              "description": "Light and healthy sunflower oil",
+              "primary_image": {
+                "id": 9004,
+                "url": "https://cdn.example.com/products/sunflower-oil-5l.jpg",
+                "alt_text": "Cold Pressed Sunflower Oil 5 Litre",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 28,
+        "First_name": "Rohit",
+        "Last_name": "Sharma",
+        "email": "rohit@example.com"
+      }
+    },
+    {
+      "id": "105",
+      "user_id": "USR5",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "dicounted_total_price": 850,
+      "actual_amount": 850,
+      "updated_at": "2025-12-27T20:00:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 505,
+          "cart_id": 104,
+          "product_variant_id": 3004,
+          "quantity": 1,
+          "product_actual_price": 850,
+          "applicable_promotion_id": null,
+          "promotion_discount": 0,
+          "After_discounted_total": 850,
+          "updated_at": "2025-12-27T19:55:00",
+          "product_variant": {
+            "id": 3004,
+            "variant_name": "5 Litre Can",
+            "variant_price": 850,
+            "product": {
+              "id": 203,
+              "name": "Cold Pressed Sunflower Oil",
+              "description": "Light and healthy sunflower oil",
+              "primary_image": {
+                "id": 9004,
+                "url": "https://cdn.example.com/products/sunflower-oil-5l.jpg",
+                "alt_text": "Cold Pressed Sunflower Oil 5 Litre",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 28,
+        "First_name": "Rohit",
+        "Last_name": "Sharma",
+        "email": "rohit@example.com"
+      }
+    },
+    {
+      "id": "106",
+      "user_id": "USR6",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "dicounted_total_price": 850,
+      "actual_amount": 850,
+      "updated_at": "2025-12-27T20:00:00",
+      "cart_item_nested_fields": [
+        {
+          "id": 505,
+          "cart_id": 104,
+          "product_variant_id": 3004,
+          "quantity": 1,
+          "product_actual_price": 850,
+          "applicable_promotion_id": null,
+          "promotion_discount": 0,
+          "After_discounted_total": 850,
+          "updated_at": "2025-12-27T19:55:00",
+          "product_variant": {
+            "id": 3004,
+            "variant_name": "5 Litre Can",
+            "variant_price": 850,
+            "product": {
+              "id": 203,
+              "name": "Cold Pressed Sunflower Oil",
+              "description": "Light and healthy sunflower oil",
+              "primary_image": {
+                "id": 9004,
+                "url": "https://cdn.example.com/products/sunflower-oil-5l.jpg",
+                "alt_text": "Cold Pressed Sunflower Oil 5 Litre",
+                "is_primary": true
+              }
+            }
+          }
+        }
+      ],
+      "user": {
+        "id": 28,
+        "First_name": "Rohit",
+        "Last_name": "Sharma",
+        "email": "rohit@example.com"
+      }
+    },
+    {
+      "id": "CART1767596233459",
+      "user_id": "USR1767284731621",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "actual_amount": 0,
+      "dicounted_total_price": 0,
+      "updated_at": "2026-01-05T06:57:13.459Z",
+      "cart_item_nested_fields": []
+    }
+  ]
+}

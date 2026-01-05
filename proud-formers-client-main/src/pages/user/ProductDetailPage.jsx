@@ -1,0 +1,323 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { Star, Package, Truck, Shield, ChevronLeft, ShoppingCart, Heart, Share2, Minus, Plus } from 'lucide-react';
+
+export default function ProductDetailPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedVariant, setSelectedVariant] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [activeImage, setActiveImage] = useState(0);
+
+  useEffect(() => {
+    fetchProduct();
+  }, [id]);
+
+  const fetchProduct = async () => {
+    try {
+      const response = await fetch(`http://localhost:4000/products/${id}`);
+      const data = await response.json();
+      setProduct(data);
+      if (data.product_variants?.length > 0) {
+        setSelectedVariant(data.product_variants[0]);
+      }
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching product:', error);
+      setLoading(false);
+    }
+  };
+
+  const addToCart = () => {
+    if (!product || !selectedVariant) return;
+
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    
+    // Find if product already exists in cart
+    const existingItemIndex = cart.findIndex(item => 
+      item.productId === product.id && item.variantId === selectedVariant.id
+    );
+
+    if (existingItemIndex >= 0) {
+      // Update quantity
+      cart[existingItemIndex].quantity += quantity;
+    } else {
+      // Add new item
+      const primaryImage = product.product_images?.find(img => img.is_primary);
+      cart.push({
+        productId: product.id,
+        variantId: selectedVariant.id,
+        name: product.name,
+        variantName: `${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}`,
+        price: selectedVariant.variant_price,
+        image: primaryImage?.image_path || '',
+        quantity: quantity,
+        stock: product.stock_quantity,
+        category: product.categorie_details?.name
+      });
+    }
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+    
+    // Show notification
+    alert(`${quantity} × ${product.name} added to cart!`);
+  };
+
+  const handleQuantityChange = (change) => {
+    const newQuantity = quantity + change;
+    if (newQuantity >= 1 && newQuantity <= product.stock_quantity) {
+      setQuantity(newQuantity);
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-50/50 to-emerald-50/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-green-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600 text-lg">Loading product details...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-green-50/50 to-emerald-50/30 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <span className="text-3xl">❌</span>
+          </div>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">Product not found</h3>
+          <p className="text-gray-500 mb-6">The product you're looking for doesn't exist.</p>
+          <button
+            onClick={() => navigate('/products')}
+            className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-medium hover:shadow-lg transition-all duration-300"
+          >
+            Back to Products
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const primaryImage = product.product_images?.find(img => img.is_primary);
+  const allImages = product.product_images || [];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-green-50/50 to-emerald-50/30 py-8">
+      <div className="max-w-7xl mx-auto px-4">
+        {/* Back Button */}
+        <button
+          onClick={() => navigate('/products')}
+          className="flex items-center gap-2 text-gray-600 hover:text-green-700 mb-6 transition-colors"
+        >
+          <ChevronLeft className="w-5 h-5" />
+          Back to Products
+        </button>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Product Images */}
+          <div className="space-y-4">
+            {/* Main Image */}
+            <div className="bg-white rounded-2xl shadow-lg p-8 flex items-center justify-center h-96">
+              {allImages[activeImage]?.image_path && !allImages[activeImage].image_path.includes('blob:') ? (
+                <img
+                  src={allImages[activeImage].image_path}
+                  alt={allImages[activeImage].alt_text || product.name}
+                  className="max-h-80 max-w-full object-contain"
+                />
+              ) : (
+                <div className="text-8xl opacity-30">
+                  {product.categorie_details?.name === 'Organic Grains' ? '🌾' :
+                   product.categorie_details?.name === 'Cold-Pressed Oils' ? '🫒' :
+                   product.categorie_details?.name === 'Farm Fresh Spices' ? '🌶️' :
+                   product.categorie_details?.name === 'Natural Sweeteners' ? '🍯' :
+                   product.categorie_details?.name === 'Dry Fruits & Nuts' ? '🥜' : '📦'}
+                </div>
+              )}
+            </div>
+
+            {/* Thumbnail Images */}
+            {allImages.length > 1 && (
+              <div className="flex gap-2 overflow-x-auto pb-2">
+                {allImages.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveImage(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                      activeImage === index ? 'border-green-500' : 'border-gray-200'
+                    }`}
+                  >
+                    {image.image_path && !image.image_path.includes('blob:') ? (
+                      <img
+                        src={image.image_path}
+                        alt={image.alt_text || `Product image ${index + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-100 flex items-center justify-center">
+                        <span className="text-2xl">📷</span>
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Product Details */}
+          <div className="space-y-6">
+            {/* Category Badge */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-semibold text-green-600 bg-green-100 px-3 py-1 rounded-full">
+                {product.categorie_details?.name || 'Uncategorized'}
+              </span>
+              {product.is_featured && (
+                <span className="text-xs font-semibold bg-gradient-to-r from-amber-500 to-orange-500 text-white px-3 py-1 rounded-full">
+                  ⭐ Featured Product
+                </span>
+              )}
+            </div>
+
+            {/* Product Name */}
+            <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+
+            {/* Price */}
+            <div className="space-y-2">
+              <div className="text-4xl font-bold text-green-600">
+                ₹{selectedVariant?.variant_price?.toFixed(2) || '0.00'}
+              </div>
+              <div className="text-sm text-gray-500">
+                Price varies by size
+              </div>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <h3 className="text-lg font-semibold text-gray-800">Description</h3>
+              <p className="text-gray-600">{product.description}</p>
+            </div>
+
+            {/* Stock Info */}
+            <div className="flex items-center gap-2 text-gray-600">
+              <Package className="w-5 h-5" />
+              <span className="font-medium">
+                {product.stock_quantity > 0 ? (
+                  <>
+                    <span className="text-green-600">In Stock:</span> {product.stock_quantity} {product.stock_unit}
+                  </>
+                ) : (
+                  <span className="text-red-600">Out of Stock</span>
+                )}
+              </span>
+            </div>
+
+            {/* Variant Selection */}
+            {product.product_variants?.length > 1 && (
+              <div className="space-y-3">
+                <h3 className="text-lg font-semibold text-gray-800">Select Size</h3>
+                <div className="flex flex-wrap gap-3">
+                  {product.product_variants.map((variant) => (
+                    <button
+                      key={variant.id}
+                      onClick={() => setSelectedVariant(variant)}
+                      className={`px-4 py-3 rounded-xl border-2 transition-all duration-200 ${
+                        selectedVariant?.id === variant.id
+                          ? 'border-green-500 bg-green-50 text-green-700'
+                          : 'border-gray-200 hover:border-green-300 text-gray-700'
+                      }`}
+                    >
+                      <div className="font-medium">{variant.variant_quantity} {variant.quantity_unit}</div>
+                      <div className="text-sm font-bold">₹{variant.variant_price.toFixed(2)}</div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Quantity */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-gray-800">Quantity</h3>
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3 border-2 border-gray-200 rounded-xl px-4 py-2">
+                  <button
+                    onClick={() => handleQuantityChange(-1)}
+                    disabled={quantity <= 1}
+                    className="p-1 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Minus className="w-5 h-5" />
+                  </button>
+                  <span className="text-xl font-bold w-12 text-center">{quantity}</span>
+                  <button
+                    onClick={() => handleQuantityChange(1)}
+                    disabled={quantity >= product.stock_quantity}
+                    className="p-1 rounded-lg hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    <Plus className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="text-sm text-gray-500">
+                  Max: {product.stock_quantity} units
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+              <button
+                onClick={addToCart}
+                disabled={product.stock_quantity === 0}
+                className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 shadow-lg ${
+                  product.stock_quantity === 0
+                    ? 'bg-gray-400 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
+                }`}
+              >
+                <div className="flex items-center justify-center gap-3">
+                  <ShoppingCart className="w-6 h-6" />
+                  <span className="text-lg">
+                    {product.stock_quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                  </span>
+                </div>
+              </button>
+
+              <div className="flex gap-2">
+                <button className="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 transition-colors">
+                  <Heart className="w-6 h-6 text-gray-600" />
+                </button>
+                <button className="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 transition-colors">
+                  <Share2 className="w-6 h-6 text-gray-600" />
+                </button>
+              </div>
+            </div>
+
+            {/* Features */}
+            <div className="grid grid-cols-2 gap-4 pt-6">
+              <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm">
+                <div className="bg-green-100 p-2 rounded-lg">
+                  <Truck className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <div className="font-semibold">Free Delivery</div>
+                  <div className="text-sm text-gray-500">On orders above ₹500</div>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 bg-white p-4 rounded-xl shadow-sm">
+                <div className="bg-green-100 p-2 rounded-lg">
+                  <Shield className="w-6 h-6 text-green-600" />
+                </div>
+                <div>
+                  <div className="font-semibold">Quality Guarantee</div>
+                  <div className="text-sm text-gray-500">100% fresh & natural</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

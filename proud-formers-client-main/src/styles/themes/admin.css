@@ -1,0 +1,47 @@
+@import "tailwindcss";
+/* @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&family=Inter:wght@400;500&display=swap'); */
+
+/* ==========================
+   ADMIN THEME (Dashboard)
+   Professional • Bold • Data‑Oriented
+========================== */
+@theme {
+  /* Primary (Blue Shades) */
+  --color-primary: #0D47A1;
+  --color-primary-light: #1976D2;
+  --color-primary-dark: #002171;
+
+  /* Secondary */
+  --color-secondary: #455A64;
+  --color-secondary-light: #78909C;
+  --color-secondary-dark: #1C313A;
+
+  /* Accent */
+  --color-accent: #2962FF;
+  --color-accent-hover: #0039CB;
+  --color-accent-soft: #82B1FF;
+
+  /* Backgrounds */
+  --color-bg: #F4F7FB;
+  --color-surface: #FFFFFF;
+  --color-muted-bg: #E9EEF5;
+
+  /* Text */
+  --color-text-heading: #0F172A;
+  --color-text-body: #334155;
+  --color-text-muted: #64748B;
+
+  /* Fonts */
+  --font-heading: "Montserrat", sans-serif;
+  --font-body: "Inter", sans-serif;
+
+  /* Typography */
+  /* --text-h1: 42px;
+  --text-h2: 30px;
+  --text-h3: 22px;
+  --text-body-lg: 18px;
+  --text-body: 16px;
+  --text-small: 14px; */
+}
+
+
