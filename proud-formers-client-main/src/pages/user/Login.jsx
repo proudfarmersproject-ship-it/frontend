@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, saveUserToStorage } from "../../services/authService"; // Add saveUserToStorage
+import { 
+  loginUser, 
+  saveUserToStorage 
+} from "../../services/authService";
+import { useCartStore } from "../../services/cartService"; // Import cart store
 import { Mail, Lock, ArrowRight, LogIn, KeyRound, CheckCircle } from "lucide-react";
 
 const initialForm = {
@@ -13,8 +17,12 @@ export default function Login() {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false); // Add remember me state
+  const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
+  
+  // Get cart store methods
+  const setUser = useCartStore(state => state.setUser);
+  const mergeGuestCart = useCartStore(state => state.mergeGuestCart);
 
   const handleChange = (e) => {
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -46,33 +54,28 @@ export default function Login() {
 
     setIsSubmitting(true);
     try {
+      // Save guest cart before login (for merging later)
+      const guestCart = useCartStore.getState().cart;
+      
+      // Login user
       const user = await loginUser(form);
       
-      // ✅ SAVE USER TO LOCALSTORAGE - This was missing!
+      // ✅ SAVE USER TO STORAGE (triggers userStateChanged event)
       saveUserToStorage(user, rememberMe);
+      
+      // ✅ IMMEDIATELY UPDATE CART STORE
+      setUser(user);
+      
+      // ✅ MERGE GUEST CART WITH USER CART
+      if (guestCart.length > 0) {
+        setTimeout(() => {
+          mergeGuestCart(guestCart);
+        }, 100);
+      }
       
       // Show success message
       setTimeout(() => {
-        // Custom success alert
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'fixed top-4 right-4 z-50 animate-in slide-in-from-right-2';
-        alertDiv.innerHTML = `
-          <div class="bg-green-50 border border-green-200 rounded-xl p-4 shadow-lg max-w-sm">
-            <div class="flex items-center gap-3">
-              <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
-              <div>
-                <p class="font-semibold text-green-800">Welcome back!</p>
-                <p class="text-sm text-green-600">You have successfully logged in as ${user.first_name}</p>
-              </div>
-            </div>
-          </div>
-        `;
-        document.body.appendChild(alertDiv);
-        
-        // Remove after 3 seconds
-        setTimeout(() => {
-          alertDiv.remove();
-        }, 3000);
+        showSuccessAlert(user.first_name);
         
         // Redirect to home
         navigate("/");
@@ -80,35 +83,60 @@ export default function Login() {
       
     } catch (err) {
       const errorMessage = err.response?.data?.message || err.message || "Login failed. Please check your credentials.";
-      
-      // Show error alert
-      const alertDiv = document.createElement('div');
-      alertDiv.className = 'fixed top-4 right-4 z-50 animate-in slide-in-from-right-2';
-      alertDiv.innerHTML = `
-        <div class="bg-red-50 border border-red-200 rounded-xl p-4 shadow-lg max-w-sm">
-          <div class="flex items-center gap-3">
-            <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
-              <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </div>
-            <div>
-              <p class="font-semibold text-red-800">Login Failed</p>
-              <p class="text-sm text-red-600">${errorMessage}</p>
-            </div>
-          </div>
-        </div>
-      `;
-      document.body.appendChild(alertDiv);
-      
-      // Remove after 5 seconds
-      setTimeout(() => {
-        alertDiv.remove();
-      }, 5000);
-      
+      showErrorAlert(errorMessage);
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Success alert function
+  const showSuccessAlert = (userName) => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'fixed top-4 right-4 z-50 animate-in slide-in-from-right-2';
+    alertDiv.innerHTML = `
+      <div class="bg-green-50 border border-green-200 rounded-xl p-4 shadow-lg max-w-sm">
+        <div class="flex items-center gap-3">
+          <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0" />
+          <div>
+            <p class="font-semibold text-green-800">Welcome back!</p>
+            <p class="text-sm text-green-600">You have successfully logged in as ${userName}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    // Remove after 3 seconds
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 3000);
+  };
+
+  // Error alert function
+  const showErrorAlert = (errorMessage) => {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'fixed top-4 right-4 z-50 animate-in slide-in-from-right-2';
+    alertDiv.innerHTML = `
+      <div class="bg-red-50 border border-red-200 rounded-xl p-4 shadow-lg max-w-sm">
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-6 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <svg class="w-4 h-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </div>
+          <div>
+            <p class="font-semibold text-red-800">Login Failed</p>
+            <p class="text-sm text-red-600">${errorMessage}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(alertDiv);
+    
+    // Remove after 5 seconds
+    setTimeout(() => {
+      alertDiv.remove();
+    }, 5000);
   };
 
   const handleForgotPassword = () => {

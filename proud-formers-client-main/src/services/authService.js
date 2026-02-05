@@ -3,13 +3,11 @@ const API_URL = "http://localhost:4000/users";
 
 // Helper function to get the correct app URL
 const getAppUrl = () => {
-  // Use window.location.origin to get current app URL (e.g., http://localhost:5173)
   return window.location.origin || "http://localhost:3000";
 };
 
 // REGISTER USER
 export const registerUser = async (data) => {
-  // 1) Safe fetch users
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Server unavailable");
   
@@ -18,10 +16,10 @@ export const registerUser = async (data) => {
     users = await res.json();
   } catch (e) {
     console.error("Failed to parse users:", e);
-    users = []; // Empty array on parse error
+    users = [];
   }
 
-  // 2) Safe email check (handle undefined/null email)
+  // Email check
   if (users.some((u) => 
     u && u.email && 
     typeof u.email === 'string' && 
@@ -30,12 +28,12 @@ export const registerUser = async (data) => {
     throw new Error("Email already exists");
   }
 
-  // 3) Phone uniqueness check (safe)
+  // Phone uniqueness check
   if (users.some((u) => u && u.phone === data.phone)) {
     throw new Error("Phone number already registered");
   }
 
-  // 4) Required fields (safe access)
+  // Required fields
   const requiredFields = {
     firstName: data.firstName?.trim(),
     lastName: data.lastName?.trim(),
@@ -53,7 +51,7 @@ export const registerUser = async (data) => {
     }
   }
 
-  // 5) Format validations
+  // Format validations
   if (!/^[6-9]\d{9}$/.test(data.phone)) {
     throw new Error("Phone must be valid 10-digit Indian mobile number");
   }
@@ -85,6 +83,7 @@ export const registerUser = async (data) => {
       pincode: data.pincode.trim(),
       is_default: true,
     }],
+    cart: [] // Initialize empty cart
   };
 
   const postRes = await fetch(API_URL, {
@@ -97,12 +96,13 @@ export const registerUser = async (data) => {
     throw new Error("Failed to register user");
   }
 
-  return true;
+  // Return user without password for immediate use
+  const { password: _, ...safeUser } = newUser;
+  return safeUser;
 };
 
 // LOGIN USER
 export const loginUser = async ({ email, password }) => {
-  // 1) Input sanitization
   const cleanEmail = email?.trim().toLowerCase();
   const cleanPassword = password?.trim();
   
@@ -110,7 +110,6 @@ export const loginUser = async ({ email, password }) => {
     throw new Error("Email and password required");
   }
 
-  // 2) Safe fetch users
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Server unavailable");
   
@@ -121,11 +120,9 @@ export const loginUser = async ({ email, password }) => {
     throw new Error("Failed to load users");
   }
 
-  // 3) Safe user lookup
   const existingUser = users.find((u) => 
-    u &&           // User exists
-    u.email &&      // Has email property
-    typeof u.email === 'string' &&  // Email is string
+    u && u.email && 
+    typeof u.email === 'string' && 
     u.email.toLowerCase() === cleanEmail
   );
 
@@ -133,17 +130,15 @@ export const loginUser = async ({ email, password }) => {
     throw new Error("Invalid email or password");
   }
 
-  // 4) Check if password exists in user object
   if (!existingUser.password) {
     throw new Error("Invalid user data");
   }
 
-  // 5) Compare passwords (plain text comparison - backend should handle hashing)
   if (existingUser.password !== cleanPassword) {
     throw new Error("Invalid email or password");
   }
 
-  // 6) Return safe user without password
+  // Return user without password
   const { password: userPassword, ...safeUser } = existingUser;
   return safeUser;
 };
@@ -151,16 +146,16 @@ export const loginUser = async ({ email, password }) => {
 // LOGOUT USER
 export const logoutUser = async () => {
   try {
-    // For client-side logout, we don't need to call the API
-    // We just clear the localStorage or session storage
+    // Clear all storage
     localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem('cart');
     sessionStorage.removeItem('user');
-    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('cart');
     
-    // Clear any other stored user data
-    localStorage.removeItem('userData');
-    sessionStorage.removeItem('userData');
+    // Clear cart from Zustand store if it exists
+    if (typeof window !== 'undefined' && window.updateCartState) {
+      window.updateCartState([]);
+    }
     
     return { success: true, message: "Logged out successfully" };
   } catch (error) {
@@ -169,26 +164,27 @@ export const logoutUser = async () => {
   }
 };
 
-// FORGOT PASSWORD - Generate reset token & "send email"
+// FORGOT PASSWORD
 export const forgotPassword = async (email) => {
   const cleanEmail = email?.trim().toLowerCase();
   if (!cleanEmail) throw new Error("Email required");
 
-  // 1) Safe fetch users
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Server unavailable");
+  
   let users = [];
-  try { users = await res.json(); } catch (e) { throw new Error("Failed to load users"); }
+  try { 
+    users = await res.json(); 
+  } catch (e) { 
+    throw new Error("Failed to load users"); 
+  }
 
-  // 2) Find user
   const user = users.find((u) => u && u.email && u.email.toLowerCase() === cleanEmail);
   if (!user) throw new Error("Email not found");
 
-  // 3) Generate reset token (24hr expiry)
   const resetToken = "RESET_" + Date.now() + "_" + Math.random().toString(36).substr(2, 9);
-  const resetExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(); // 24h
+  const resetExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
-  // 4) Update user with reset info
   user.reset_token = resetToken;
   user.reset_expiry = resetExpiry;
 
@@ -200,7 +196,6 @@ export const forgotPassword = async (email) => {
 
   if (!updateRes.ok) throw new Error("Failed to send reset link");
 
-  // 5) SIMULATE EMAIL - Use dynamic URL
   const resetUrl = `${getAppUrl()}/reset-password?token=${resetToken}`;
   console.log(`📧 EMAIL SENT to ${cleanEmail}:`);
   console.log(`Reset link: ${resetUrl}`);
@@ -208,23 +203,26 @@ export const forgotPassword = async (email) => {
   return { 
     message: "Reset link sent to your email", 
     token: resetToken,
-    resetUrl: resetUrl // Return the URL for UI display
+    resetUrl: resetUrl
   };
 };
 
-// RESET PASSWORD - Validate token & update password
+// RESET PASSWORD
 export const resetPassword = async (token, newPassword) => {
   if (!token || !newPassword || newPassword.length < 6) {
     throw new Error("Invalid token or password too short");
   }
 
-  // 1) Fetch users
   const res = await fetch(API_URL);
   if (!res.ok) throw new Error("Server unavailable");
+  
   let users = [];
-  try { users = await res.json(); } catch (e) { throw new Error("Failed to load users"); }
+  try { 
+    users = await res.json(); 
+  } catch (e) { 
+    throw new Error("Failed to load users"); 
+  }
 
-  // 2) Find user with valid reset token
   const now = new Date().toISOString();
   const user = users.find((u) => 
     u && u.reset_token === token && 
@@ -233,7 +231,6 @@ export const resetPassword = async (token, newPassword) => {
 
   if (!user) throw new Error("Invalid or expired reset token");
 
-  // 3) Update password with plain text (backend should hash it)
   user.password = newPassword;
   delete user.reset_token;
   delete user.reset_expiry;
@@ -249,26 +246,97 @@ export const resetPassword = async (token, newPassword) => {
   return { message: "Password reset successfully" };
 };
 
-// Optional: Helper function to validate user session
+// USER STORAGE FUNCTIONS
+
+// Get user from storage
+export const getUserFromStorage = () => {
+  try {
+    const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
+  } catch (error) {
+    console.error("Error parsing user from storage:", error);
+    return null;
+  }
+};
+
+// Save user to storage
+export const saveUserToStorage = (user, rememberMe = false) => {
+  try {
+    // Remove password before saving
+    const { password, ...safeUser } = user;
+    const userData = JSON.stringify(safeUser);
+    
+    if (rememberMe) {
+      localStorage.setItem('user', userData);
+    } else {
+      sessionStorage.setItem('user', userData);
+    }
+    
+    // Dispatch a custom event for immediate navbar update
+    const event = new CustomEvent('userStateChanged', { 
+      detail: { user: safeUser } 
+    });
+    window.dispatchEvent(event);
+    
+    return true;
+  } catch (error) {
+    console.error("Error saving user to storage:", error);
+    return false;
+  }
+};
+
+// Clear user from storage
+export const clearUserFromStorage = () => {
+  try {
+    localStorage.removeItem('user');
+    sessionStorage.removeItem('user');
+    
+    // Dispatch logout event
+    const event = new CustomEvent('userStateChanged', { 
+      detail: { user: null } 
+    });
+    window.dispatchEvent(event);
+    
+    return true;
+  } catch (error) {
+    console.error("Error clearing user from storage:", error);
+    return false;
+  }
+};
+
+// Check if user is authenticated
+export const isAuthenticated = () => {
+  return !!getUserFromStorage();
+};
+
+// Get current user (for immediate access)
+export const getCurrentUser = () => {
+  return getUserFromStorage();
+};
+
+// Validate session (optional - for checking with server)
 export const validateSession = async () => {
   try {
-    const res = await fetch(API_URL);
-    if (!res.ok) throw new Error("Server unavailable");
-    const users = await res.json();
-    return users.length > 0;
+    const user = getCurrentUser();
+    if (!user) return false;
+    
+    const res = await fetch(`${API_URL}/${user.id}`);
+    return res.ok;
   } catch (error) {
     console.error("Session validation failed:", error);
     return false;
   }
 };
 
-// Helper to check if user exists by email
+// Check if user exists by email
 export const checkUserExists = async (email) => {
   try {
     const res = await fetch(API_URL);
     if (!res.ok) throw new Error("Server unavailable");
+    
     const users = await res.json();
     const cleanEmail = email?.trim().toLowerCase();
+    
     return users.some((u) => 
       u && u.email && 
       typeof u.email === 'string' && 
@@ -280,36 +348,45 @@ export const checkUserExists = async (email) => {
   }
 };
 
-// Get current user from storage
-export const getCurrentUser = () => {
+// Update user profile
+export const updateUserProfile = async (userId, userData) => {
   try {
-    const user = localStorage.getItem('user') || sessionStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
-  } catch (error) {
-    console.error("Error getting current user:", error);
-    return null;
-  }
-};
+    const response = await fetch(`${API_URL}/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(userData),
+    });
 
-// Save user to storage
-export const saveUserToStorage = (user, rememberMe = false) => {
-  try {
-    const userData = JSON.stringify(user);
-    if (rememberMe) {
-      localStorage.setItem('user', userData);
-    } else {
-      sessionStorage.setItem('user', userData);
+    if (!response.ok) {
+      throw new Error('Failed to update user profile');
     }
-    return true;
+
+    const updatedUser = await response.json();
+    
+    // Update in storage if this is the current user
+    const currentUser = getCurrentUser();
+    if (currentUser && currentUser.id === userId) {
+      saveUserToStorage(updatedUser, localStorage.getItem('user') !== null);
+    }
+
+    return updatedUser;
   } catch (error) {
-    console.error("Error saving user to storage:", error);
-    return false;
+    console.error('Error updating user profile:', error);
+    throw error;
   }
 };
 
-// Check if user is authenticated
-export const isAuthenticated = () => {
-  return !!getCurrentUser();
+// Helper to sync user state across components
+export const syncUserState = (callback) => {
+  window.addEventListener('userStateChanged', (e) => {
+    callback(e.detail.user);
+  });
+  
+  return () => {
+    window.removeEventListener('userStateChanged', callback);
+  };
 };
 
 // Export all functions
@@ -321,8 +398,11 @@ export default {
   resetPassword,
   validateSession,
   checkUserExists,
+  getUserFromStorage,
   getCurrentUser,
   saveUserToStorage,
+  clearUserFromStorage,
   isAuthenticated,
+  updateUserProfile,
+  syncUserState
 };
-

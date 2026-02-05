@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { getCurrentUser } from '../../services/authService'; // Import your auth service
 
-const MyOrdersPage = () => {
+const OrdersPage = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -550,4 +550,4 @@ const MyOrdersPage = () => {
   );
 };
 
-export default MyOrdersPage;
+export default OrdersPage;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Star, Package, Truck, Shield, ChevronLeft, ShoppingCart, Heart, Share2, Minus, Plus } from 'lucide-react';
+import { useCartStore } from '../../services/cartService'; // Import Zustand store
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -10,9 +11,17 @@ export default function ProductDetailPage() {
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [activeImage, setActiveImage] = useState(0);
+  
+  // Use Zustand store instead of local state
+  const { 
+    user, 
+    addToCart: addToCartStore, 
+    loading: cartLoading 
+  } = useCartStore();
 
   useEffect(() => {
     fetchProduct();
+    // Note: User state is already loaded by Zustand store
   }, [id]);
 
   const fetchProduct = async () => {
@@ -30,42 +39,26 @@ export default function ProductDetailPage() {
     }
   };
 
-  const addToCart = () => {
-    if (!product || !selectedVariant) return;
+  // Simplified Add to Cart Function using Zustand
+  const handleAddToCart = async () => {
+    if (!product || !selectedVariant || product.stock_quantity === 0) return;
 
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    
-    // Find if product already exists in cart
-    const existingItemIndex = cart.findIndex(item => 
-      item.productId === product.id && item.variantId === selectedVariant.id
-    );
-
-    if (existingItemIndex >= 0) {
-      // Update quantity
-      cart[existingItemIndex].quantity += quantity;
-    } else {
-      // Add new item
-      const primaryImage = product.product_images?.find(img => img.is_primary);
-      cart.push({
-        productId: product.id,
-        variantId: selectedVariant.id,
-        name: product.name,
-        variantName: `${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}`,
-        price: selectedVariant.variant_price,
-        image: primaryImage?.image_path || '',
-        quantity: quantity,
-        stock: product.stock_quantity,
-        category: product.categorie_details?.name
-      });
+    try {
+      // Use Zustand store's addToCart function
+      await addToCartStore(product, selectedVariant, quantity);
+      
+      // Show success notification
+      alert(`${quantity} × ${product.name} (${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}) added to cart!`);
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add item to cart. Please try again.');
     }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Show notification
-    alert(`${quantity} × ${product.name} added to cart!`);
   };
 
   const handleQuantityChange = (change) => {
+    if (!product) return;
+    
     const newQuantity = quantity + change;
     if (newQuantity >= 1 && newQuantity <= product.stock_quantity) {
       setQuantity(newQuantity);
@@ -110,13 +103,15 @@ export default function ProductDetailPage() {
     <div className="min-h-screen bg-gradient-to-b from-green-50/50 to-emerald-50/30 py-8">
       <div className="max-w-7xl mx-auto px-4">
         {/* Back Button */}
-        <button
-          onClick={() => navigate('/products')}
-          className="flex items-center gap-2 text-gray-600 hover:text-green-700 mb-6 transition-colors"
-        >
-          <ChevronLeft className="w-5 h-5" />
-          Back to Products
-        </button>
+        <div className="flex items-center justify-between mb-6">
+          <button
+            onClick={() => navigate('/products')}
+            className="flex items-center gap-2 text-gray-600 hover:text-green-700 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+            Back to Products
+          </button>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Product Images */}
@@ -191,7 +186,9 @@ export default function ProductDetailPage() {
                 ₹{selectedVariant?.variant_price?.toFixed(2) || '0.00'}
               </div>
               <div className="text-sm text-gray-500">
-                Price varies by size
+                {product.product_variants?.length > 1 
+                  ? 'Price varies by size' 
+                  : `₹${selectedVariant?.variant_quantity} ${selectedVariant?.quantity_unit}`}
               </div>
             </div>
 
@@ -265,13 +262,14 @@ export default function ProductDetailPage() {
               </div>
             </div>
 
+
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 pt-4">
               <button
-                onClick={addToCart}
-                disabled={product.stock_quantity === 0}
+                onClick={handleAddToCart}
+                disabled={product.stock_quantity === 0 || cartLoading}
                 className={`flex-1 py-4 px-6 rounded-xl font-semibold transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 shadow-lg ${
-                  product.stock_quantity === 0
+                  product.stock_quantity === 0 || cartLoading
                     ? 'bg-gray-400 cursor-not-allowed'
                     : 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
                 }`}
@@ -279,19 +277,30 @@ export default function ProductDetailPage() {
                 <div className="flex items-center justify-center gap-3">
                   <ShoppingCart className="w-6 h-6" />
                   <span className="text-lg">
-                    {product.stock_quantity === 0 ? 'Out of Stock' : 'Add to Cart'}
+                    {cartLoading 
+                      ? 'Adding to Cart...' 
+                      : product.stock_quantity === 0 
+                        ? 'Out of Stock' 
+                        : `Add to Cart`
+                    }
                   </span>
                 </div>
               </button>
+            </div>
 
-              <div className="flex gap-2">
-                <button className="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 transition-colors">
-                  <Heart className="w-6 h-6 text-gray-600" />
-                </button>
-                <button className="p-4 border-2 border-gray-200 rounded-xl hover:border-green-300 transition-colors">
-                  <Share2 className="w-6 h-6 text-gray-600" />
-                </button>
+            {/* Price Summary */}
+            <div className="bg-gray-50 rounded-xl p-4 mt-4">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600">Price for {quantity} item(s):</span>
+                <span className="text-xl font-bold text-green-600">
+                  ₹{(selectedVariant?.variant_price * quantity).toFixed(2)}
+                </span>
               </div>
+              {product.product_variants?.length > 1 && selectedVariant && (
+                <div className="text-sm text-gray-500 mt-2">
+                  Selected: {selectedVariant.variant_quantity} {selectedVariant.quantity_unit}
+                </div>
+              )}
             </div>
 
             {/* Features */}

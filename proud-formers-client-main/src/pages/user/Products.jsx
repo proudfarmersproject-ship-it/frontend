@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Filter, Star, Package, ShoppingCart, X, ChevronDown, Sliders } from 'lucide-react';
+import { useCartStore } from '../../services/cartService'; // Import Zustand store
 
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -14,9 +15,17 @@ export default function ProductsPage() {
   
   // New state to track selected variant for each product
   const [selectedVariants, setSelectedVariants] = useState({});
+  
+  // Use Zustand store instead of local state
+  const { 
+    user, 
+    addToCart: addToCartStore, 
+    loading: cartLoading 
+  } = useCartStore();
 
   useEffect(() => {
     fetchData();
+    // Note: User state is already loaded by Zustand store
   }, []);
 
   const fetchData = async () => {
@@ -56,8 +65,8 @@ export default function ProductsPage() {
     }));
   };
 
-  // Add to Cart Function
-  const addToCart = (product) => {
+  // Simplified Add to Cart Function using Zustand
+  const handleAddToCart = async (product) => {
     // Get the selected variant ID for this product
     const selectedVariantId = selectedVariants[product.id];
     
@@ -71,35 +80,17 @@ export default function ProductsPage() {
       return;
     }
 
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    
-    // Find if product already exists in cart
-    const existingItemIndex = cart.findIndex(item => 
-      item.productId === product.id && 
-      item.variantId === selectedVariant.id
-    );
-
-    if (existingItemIndex >= 0) {
-      // Update quantity
-      cart[existingItemIndex].quantity += 1;
-    } else {
-      // Add new item
-      cart.push({
-        productId: product.id,
-        variantId: selectedVariant.id,
-        name: product.name,
-        variantName: `${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}`,
-        price: selectedVariant.variant_price || 0,
-        image: product.product_images?.find(img => img.is_primary)?.image_path || '',
-        quantity: 1,
-        stock: product.stock_quantity
-      });
+    try {
+      // Use Zustand store's addToCart function
+      await addToCartStore(product, selectedVariant, 1);
+      
+      // Show success notification
+      alert(`${product.name} (${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}) added to cart!`);
+      
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert('Failed to add item to cart. Please try again.');
     }
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Show notification
-    alert(`${product.name} (${selectedVariant.variant_quantity} ${selectedVariant.quantity_unit}) added to cart!`);
   };
 
   const filteredProducts = products.filter(product => {
@@ -161,6 +152,8 @@ export default function ProductsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-green-50/50 to-emerald-50/30">
+      
+
       {/* Mobile Filter Button */}
       <div className="lg:hidden sticky top-0 z-30 bg-white/95 backdrop-blur-sm border-b shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-3">
@@ -171,9 +164,6 @@ export default function ProductsPage() {
                   ? 'All Products' 
                   : categories.find(c => c.id === selectedCategory)?.name}
               </h2>
-              <p className="text-sm text-gray-500">
-                {sortedProducts.length} {sortedProducts.length === 1 ? 'item' : 'items'}
-              </p>
             </div>
             
             <div className="flex items-center gap-3">
@@ -493,7 +483,6 @@ export default function ProductsPage() {
                   </h2>
                   <p className="text-gray-600 mt-1 flex items-center gap-2">
                     <Package className="w-4 h-4" />
-                    {sortedProducts.length} {sortedProducts.length === 1 ? 'item' : 'items'} found
                     {hasActiveFilters && (
                       <span className="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full">
                         Filters Active
@@ -640,10 +629,10 @@ export default function ProductsPage() {
                           </div>
 
                           <button 
-                            onClick={() => addToCart(product)}
-                            disabled={!selectedVariant}
+                            onClick={() => handleAddToCart(product)}
+                            disabled={!selectedVariant || cartLoading}
                             className={`w-full font-semibold py-3 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 shadow-md hover:shadow-lg flex items-center justify-center gap-2 ${
-                              selectedVariant
+                              selectedVariant && !cartLoading
                                 ? 'bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white'
                                 : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                             }`}
@@ -651,7 +640,9 @@ export default function ProductsPage() {
                             <ShoppingCart className="w-5 h-5" />
                             <span>
                               {selectedVariant 
-                                ? `Add to Cart - ₹${selectedVariant.variant_price.toFixed(2)}`
+                                ? cartLoading 
+                                  ? 'Adding...' 
+                                  : `Add to Cart - ₹${selectedVariant.variant_price.toFixed(2)}`
                                 : 'Select a size first'
                               }
                             </span>

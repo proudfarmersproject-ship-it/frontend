@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-
+import { useEffect } from "react"; // Add this
+import { useCartStore } from './services/cartService';
 import Register from "./pages/user/Register";
 import Login from "./pages/user/Login";
 import ResetPassword from "./pages/user/ResetPassword";
@@ -12,6 +13,19 @@ import Navbar from "./pages/user/Navbar";
 import Footer from "./pages/user/Footer";
 import UserEditForm from "./pages/user/UserEditForm";
 import OrdersPage from "./pages/user/OrdersPage";
+import CheckOut from "./pages/user/CheckOut";
+
+// AppInitializer Component
+function AppInitializer() {
+  const loadCart = useCartStore((state) => state.loadCart);
+  
+  useEffect(() => {
+    console.log("🔄 AppInitializer: Loading cart...");
+    loadCart();
+  }, [loadCart]);
+  
+  return null;
+}
 
 function AppRoutes() {
   const location = useLocation();
@@ -28,8 +42,10 @@ function AppRoutes() {
 
   return (
     <>
+      {/* AppInitializer runs once when app starts */}
+      <AppInitializer />
+      
       {!hideLayout && <Navbar />}
-
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<Products />} />
@@ -37,6 +53,7 @@ function AppRoutes() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/profile" element={<UserEditForm />} />
         <Route path="/orders" element={<OrdersPage />} />
+        <Route path="/checkout" element={<CheckOut />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

@@ -1,10 +1,9 @@
 import React from "react";
-import Products from "./Products";
-
+import Slider from "../../layouts/user/Slider";
 const HomePage = () => {
   return (
     <div>
-      <Products />
+      <Slider />
     </div>
   );
 };

@@ -266,7 +266,7 @@
     {
       "id": "USR1",
       "first_name": "Jagadessh",
-      "last_name": "Gandi",
+      "last_name": "g",
       "password_hash": "9djioncjbuiasj",
       "email": "abcd@gmail.com",
       "phone": "7387498352",
@@ -285,7 +285,23 @@
           "is_default": true
         }
       ],
-      "password": "12345678"
+      "password": "12345678",
+      "cart": [
+        {
+          "productId": "P002",
+          "variantId": "PV4",
+          "name": "Cold Pressed Sunflower Oil",
+          "variantName": "5 L",
+          "price": 21,
+          "image": "/images/products/oil-1l.jpg",
+          "quantity": 1,
+          "stock": 300,
+          "category": "Farm Fresh Spices"
+        }
+      ],
+      "appliedCoupon": null,
+      "reset_token": "RESET_1768584442736_hrg5nirzu",
+      "reset_expiry": "2026-01-17T17:27:22.736Z"
     },
     {
       "id": "USR2",
@@ -433,13 +449,26 @@
           "pincode": "524300",
           "is_default": true
         }
+      ],
+      "cart": [
+        {
+          "productId": "P002",
+          "variantId": "PV3",
+          "name": "Cold Pressed Sunflower Oil",
+          "variantName": "1 L",
+          "price": 4.5,
+          "image": "/images/products/oil-1l.jpg",
+          "quantity": 1,
+          "stock": 300,
+          "category": "Farm Fresh Spices"
+        }
       ]
     },
     {
       "id": "USR1767436597511",
       "first_name": "JAGADISH",
       "last_name": "G",
-      "email": "jagadish@gmail.com",
+      "email": "jaga@gmail.com",
       "phone": "7416558015",
       "role": "customer",
       "password": "12345678",
@@ -455,6 +484,80 @@
           "city": "Nellore",
           "pincode": "524305",
           "is_default": true
+        }
+      ],
+      "cart": [
+        {
+          "productId": "P002",
+          "variantId": "PV3",
+          "name": "Cold Pressed Sunflower Oil",
+          "variantName": "1 L",
+          "price": 4.5,
+          "image": "/images/products/oil-1l.jpg",
+          "quantity": 1,
+          "stock": 300,
+          "category": "Farm Fresh Spices"
+        }
+      ],
+      "appliedCoupon": null
+    },
+    {
+      "id": "USR1768216915414",
+      "first_name": "john",
+      "last_name": "doe",
+      "email": "john@gmail.com",
+      "phone": "7416558013",
+      "role": "customer",
+      "password": "abc@123D",
+      "created_at": "2026-01-12",
+      "addresses": [
+        {
+          "id": "AD1768216915414",
+          "full_name": "john doe",
+          "phone": "7416558013",
+          "email": "john@gmail.com",
+          "address_line1": "123 Main",
+          "address_line2": "",
+          "city": "New York",
+          "pincode": "100001",
+          "is_default": true
+        }
+      ],
+      "cart": []
+    },
+    {
+      "id": "USR1768217100008",
+      "first_name": "ravi",
+      "last_name": "r",
+      "email": "ravi@gmail.com",
+      "phone": "7416558018",
+      "role": "customer",
+      "password": "Abcd@7102",
+      "created_at": "2026-01-12",
+      "addresses": [
+        {
+          "id": "AD1768217100009",
+          "full_name": "ravi r",
+          "phone": "7416558018",
+          "email": "ravi@gmail.com",
+          "address_line1": "123 london street",
+          "address_line2": "",
+          "city": "uk",
+          "pincode": "524305",
+          "is_default": true
+        }
+      ],
+      "cart": [
+        {
+          "productId": "P002",
+          "variantId": "PV2",
+          "name": "Cold Pressed Sunflower Oil",
+          "variantName": "2 L",
+          "price": 13.5,
+          "image": "/images/products/oil-1l.jpg",
+          "quantity": 1,
+          "stock": 300,
+          "category": "Farm Fresh Spices"
         }
       ]
     }
@@ -621,6 +724,281 @@
           "quantity": 2,
           "price_per_unit": 250,
           "total_price": 500
+        }
+      ]
+    },
+    {
+      "id": "ORD-1767704305445-84ywtwsud",
+      "created_at": "2026-01-06T12:58:25.445Z",
+      "actual_amount": 85.38820000000001,
+      "sub_total": 29.990000000000002,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "USR1767436597511",
+        "first_name": "",
+        "last_name": "",
+        "email": "jagadish@gmail.com",
+        "phone": "7416558015"
+      },
+      "shipping_address": {
+        "id": "AD1767436597511",
+        "full_name": "JAGADISH G",
+        "phone": "7416558015",
+        "email": "jagadish@gmail.com",
+        "address_line1": "India",
+        "address_line2": "",
+        "city": "Nellore",
+        "pincode": "524305",
+        "is_default": true
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-1767704305445-a4w0d9",
+          "product_id": "P004",
+          "product_name": "Whole Wheat Flour (Atta)",
+          "variant_id": "PV1",
+          "variant_name": "1 gm",
+          "stock_quantity": 800,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 20,
+          "total_price": 20
+        },
+        {
+          "order_item_id": "OITM-1767704305445-za6pwq",
+          "product_id": "P005",
+          "product_name": "Raw Wildflower Honey",
+          "variant_id": "PV8",
+          "variant_name": "500 ml",
+          "stock_quantity": 40,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 9.99,
+          "total_price": 9.99
+        }
+      ]
+    },
+    {
+      "id": "ORD-1767704344129-utyhfdi9v",
+      "created_at": "2026-01-06T12:59:04.129Z",
+      "actual_amount": 227,
+      "sub_total": 150,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "USR1767436597511",
+        "first_name": "",
+        "last_name": "",
+        "email": "jagadish@gmail.com",
+        "phone": "7416558015"
+      },
+      "shipping_address": {
+        "id": "AD1767436597511",
+        "full_name": "JAGADISH G",
+        "phone": "7416558015",
+        "email": "jagadish@gmail.com",
+        "address_line1": "India",
+        "address_line2": "",
+        "city": "Nellore",
+        "pincode": "524305",
+        "is_default": true
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-1767704344129-678zmh",
+          "product_id": "P004",
+          "product_name": "Whole Wheat Flour (Atta)",
+          "variant_id": "PV7",
+          "variant_name": "10 mg",
+          "stock_quantity": 800,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 150,
+          "total_price": 150
+        }
+      ]
+    },
+    {
+      "id": "ORD-1767781275454-vwjr3565p",
+      "created_at": "2026-01-07T10:21:15.454Z",
+      "actual_amount": 114.31,
+      "sub_total": 54.5,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "USR1767436597511",
+        "first_name": "",
+        "last_name": "",
+        "email": "jagadish@gmail.com",
+        "phone": "7416558015"
+      },
+      "shipping_address": {
+        "id": "AD1767436597511",
+        "full_name": "JAGADISH G",
+        "phone": "7416558015",
+        "email": "jagadish@gmail.com",
+        "address_line1": "India",
+        "address_line2": "",
+        "city": "Nellore",
+        "pincode": "524305",
+        "is_default": true
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-1767781275455-w7m1ir",
+          "product_id": "P002",
+          "product_name": "Cold Pressed Sunflower Oil",
+          "variant_id": "PV2",
+          "variant_name": "2 L",
+          "stock_quantity": 300,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 13.5,
+          "total_price": 13.5
+        },
+        {
+          "order_item_id": "OITM-1767781275455-j5ybu4",
+          "product_id": "P002",
+          "product_name": "Cold Pressed Sunflower Oil",
+          "variant_id": "PV4",
+          "variant_name": "5 L",
+          "stock_quantity": 300,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 21,
+          "total_price": 21
+        },
+        {
+          "order_item_id": "OITM-1767781275455-vf2cul",
+          "product_id": "P004",
+          "product_name": "Whole Wheat Flour (Atta)",
+          "variant_id": "PV1",
+          "variant_name": "1 gm",
+          "stock_quantity": 800,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 20,
+          "total_price": 20
+        }
+      ]
+    },
+    {
+      "id": "ORD-1768582819128-2a8hx0qk7",
+      "created_at": "2026-01-16T17:00:19.129Z",
+      "actual_amount": 84.81,
+      "sub_total": 29.5,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "USR1",
+        "first_name": "",
+        "last_name": "",
+        "email": "abcd@gmail.com",
+        "phone": "7387498352"
+      },
+      "shipping_address": {
+        "id": "AD1",
+        "full_name": "Jagadessh Gandi",
+        "phone": "7387498352",
+        "email": "abcd@gmail.com",
+        "address_line1": "Flat 201, Sunshine Apartments",
+        "address_line2": "Main Road",
+        "city": "Kadapa",
+        "pincode": "516001",
+        "is_default": true
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-1768582819129-dpsghr",
+          "product_id": "P001",
+          "product_name": "Premium Basmati Rice",
+          "variant_id": "PV1",
+          "variant_name": "5 Kg",
+          "stock_quantity": 1000,
+          "quantity_unit": "pcs",
+          "quantity": 2,
+          "price_per_unit": 12.5,
+          "total_price": 25
+        },
+        {
+          "order_item_id": "OITM-1768582819129-rqs0bm",
+          "product_id": "P002",
+          "product_name": "Cold Pressed Sunflower Oil",
+          "variant_id": "PV3",
+          "variant_name": "1 L",
+          "stock_quantity": 300,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 4.5,
+          "total_price": 4.5
+        }
+      ]
+    },
+    {
+      "id": "ORD-1769844336915-1u7hvw9cj",
+      "created_at": "2026-01-31T07:25:36.915Z",
+      "actual_amount": 76.55,
+      "sub_total": 22.5,
+      "discount_amount": 0,
+      "discount_source": null,
+      "order_status": "pending",
+      "payment_status": "pending",
+      "stripe_payment_id": null,
+      "customer": {
+        "id": "USR1",
+        "first_name": "",
+        "last_name": "",
+        "email": "abcd@gmail.com",
+        "phone": "7387498352"
+      },
+      "shipping_address": {
+        "id": "AD1",
+        "full_name": "Jagadessh Gandi",
+        "phone": "7387498352",
+        "email": "abcd@gmail.com",
+        "address_line1": "Flat 201, Sunshine Apartments",
+        "address_line2": "Main Road",
+        "city": "Kadapa",
+        "pincode": "516001",
+        "is_default": true
+      },
+      "order_items": [
+        {
+          "order_item_id": "OITM-1769844336915-e76oyn",
+          "product_id": "P001",
+          "product_name": "Premium Basmati Rice",
+          "variant_id": "PV1",
+          "variant_name": "2 Kg",
+          "stock_quantity": 1000,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 2.5,
+          "total_price": 2.5
+        },
+        {
+          "order_item_id": "OITM-1769844336915-zmwcw4",
+          "product_id": "P004",
+          "product_name": "Whole Wheat Flour (Atta)",
+          "variant_id": "PV1",
+          "variant_name": "1 gm",
+          "stock_quantity": 800,
+          "quantity_unit": "pcs",
+          "quantity": 1,
+          "price_per_unit": 20,
+          "total_price": 20
         }
       ]
     }
@@ -812,13 +1190,13 @@
     {
       "id": "101",
       "user_id": "USR1",
-      "coupon_active": true,
-      "coupon_id": 7,
-      "coupon_code": "NEWUSER10",
-      "coupon_discount": 150,
-      "dicounted_total_price": 1350,
-      "actual_amount": 1500,
-      "updated_at": "2025-12-30T18:45:00",
+      "coupon_active": false,
+      "coupon_id": null,
+      "coupon_code": null,
+      "coupon_discount": 0,
+      "dicounted_total_price": 1000,
+      "actual_amount": 1000,
+      "updated_at": "2026-01-06T10:50:05.372Z",
       "cart_item_nested_fields": [
         {
           "id": 501,
@@ -828,8 +1206,8 @@
           "product_actual_price": 500,
           "applicable_promotion_id": 12,
           "promotion_discount": 50,
-          "After_discounted_total": 900,
-          "updated_at": "2025-12-30T18:40:00",
+          "After_discounted_total": 1000,
+          "updated_at": "2026-01-06T10:46:04.127Z",
           "product_variant": {
             "id": 3001,
             "variant_name": "1 Litre Bottle",
